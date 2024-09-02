@@ -10,7 +10,8 @@ def extract_fillers_and_rate(input_data, duration_seconds):
         raise ValueError("Input must be a string or a list of strings.")
     
     # Regular expression pattern to match filler words composed of 'u', 'm', 'h', and 'a'
-    pattern = r'\b[umha]+\b'
+    # pattern = r'\b[umha]+\b'
+    pattern = r'\b(u+h+|a+h+|u+m+|h+m+|h+u+h+|m+h+|h+m+|h+a+h+)\b'
     
     # Collect all filler words from all sentences
     all_fillers = []
@@ -18,6 +19,7 @@ def extract_fillers_and_rate(input_data, duration_seconds):
         filler_words = re.findall(pattern, sentence, re.IGNORECASE)
         all_fillers.extend(filler_words)
     
+
     # Convert duration from seconds to minutes
     duration_minutes = duration_seconds / 60
     
@@ -28,3 +30,7 @@ def extract_fillers_and_rate(input_data, duration_seconds):
         fillers_per_minute = 0 
     
     return all_fillers, fillers_per_minute
+
+
+count = extract_fillers_and_rate("mama, ham, aa, a u", 10)
+print(count)
